@@ -121,18 +121,8 @@ class AnswerGenerator:
         start_time = time.time()
 
         try:
-            # Handle different LLM types
-            if "groq" in str(type(self.llm)).lower():
-                # For Groq/ChatGroq, don't pass callbacks at all
-                answer = self.llm.invoke(prompt)
-            else:
-                # For other LLMs, use callbacks if tracing is enabled
-                if self.enable_tracing:
-                    callbacks = [self.callback_handler]
-                    answer = self.llm.invoke(prompt, callbacks=callbacks)
-                else:
-                    answer = self.llm.invoke(prompt)
-
+            # Generate answer without callbacks to avoid the error
+            answer = self.llm.invoke(prompt)
             generation_time = time.time() - start_time
 
             # Handle different response types

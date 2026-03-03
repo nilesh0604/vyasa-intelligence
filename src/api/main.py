@@ -1,14 +1,41 @@
 """FastAPI main application for Vyasa Intelligence."""
 
-from typing import List, Optional
+# Disable tracing BEFORE any other imports
+import os
 
-from fastapi import FastAPI
-from pydantic import BaseModel
+os.environ["LANGCHAIN_TRACING_V2"] = "false"
+os.environ["LANGCHAIN_API_KEY"] = ""
+
+from typing import List, Optional  # noqa: E402
+
+from dotenv import load_dotenv  # noqa: E402
+from fastapi import FastAPI  # noqa: E402
+from pydantic import BaseModel  # noqa: E402
+
+# Load environment variables
+load_dotenv()
+
+# Ensure tracing is still disabled after loading .env
+os.environ["LANGCHAIN_TRACING_V2"] = "false"
+
+from src.pipeline import RAGPipeline  # noqa: E402
 
 app = FastAPI(
     title="Vyasa Intelligence API",
     description="A RAG system for querying the Mahabharata",
     version="0.1.0",
+)
+
+# Initialize RAG pipeline
+pipeline = RAGPipeline(
+    chroma_dir=os.getenv("CHROMA_PERSIST_DIR", "./data/chroma"),
+    bm25_path=os.getenv("BM25_INDEX_PATH", "./data/bm25_index.pkl"),
+    llm_provider=os.getenv("LLM_PROVIDER", "groq"),
+    llm_model=os.getenv("LLM_MODEL"),
+    enable_cache=True,
+    cache_type="memory",
+    enable_guardrails=True,
+    enable_tracing=False,
 )
 
 
@@ -34,10 +61,18 @@ async def health_check():
 @app.post("/query", response_model=QueryResponse)
 async def query_endpoint(request: QueryRequest):
     """Query the Mahabharata knowledge base."""
-    # TODO: Implement RAG pipeline
+    # Process query through RAG pipeline
+    result = pipeline.query(
+        question=request.question,
+        user_role=request.user_role,
+        top_k=request.top_k,
+    )
+
     return QueryResponse(
-        answer="This is a placeholder response. The RAG pipeline is not yet implemented.",
-        sources=["Source 1", "Source 2"],
+        answer=result["answer"],
+        sources=result.get("sources", []),
+        retrieval_time_ms=result.get("retrieval_time", 0) * 1000,
+        generation_time_ms=result.get("generation_time", 0) * 1000,
     )
 
 
