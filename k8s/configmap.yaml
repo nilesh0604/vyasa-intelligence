@@ -4,8 +4,7 @@ metadata:
   name: vyasa-config
   namespace: vyasa
 data:
-  LLM_PROVIDER: "ollama"
-  OLLAMA_BASE_URL: "http://host.rancher-desktop.internal:11434"
+  LLM_PROVIDER: "groq"
   CHROMA_PERSIST_DIR: "/data/chroma"
   BM25_INDEX_PATH: "/data/bm25_index.pkl"
   REDIS_URL: "redis://redis-service:6379"

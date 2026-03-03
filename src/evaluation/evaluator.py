@@ -129,6 +129,7 @@ class MahabharataEvaluator:
         rag_results: List[Dict[str, Any]],
         run_name: Optional[str] = None,
         mock: bool = False,
+        judge_llm: Optional[Any] = None,
     ) -> Dict[str, Any]:
         """Run Ragas evaluation on RAG system results.
 
@@ -136,6 +137,7 @@ class MahabharataEvaluator:
             rag_results: List of RAG system results
             run_name: Optional name for this evaluation run
             mock: If True, use mock evaluation instead of Ragas
+            judge_llm: Optional custom LLM for Ragas judge
 
         Returns:
             Dictionary with evaluation results
@@ -161,6 +163,7 @@ class MahabharataEvaluator:
             dataset=dataset,
             metrics=selected_metrics,
             raise_exceptions=False,
+            llm=judge_llm,
         )
 
         # Convert to dictionary

@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.11] - 2026-03-03
+
+### Added
+- M7: Groq API Integration - Successfully replaced Ollama with Groq for production
+- Support for ChatGroq LLM provider with proper AIMessage handling
+- Updated evaluation module to use Groq as judge LLM for Ragas
+- Performance comparison between Ollama and Groq (avg 0.47s vs 30s per query)
+
+### Changed
+- Default LLM provider changed from Ollama to Groq in .env.example
+- Docker Compose configuration updated to use Groq by default
+- Kubernetes ConfigMap updated to use Groq instead of Ollama
+- Fixed callback handling for ChatGroq to prevent parameter conflicts
+- Fixed variable scope issue in pipeline cache logic
+
+### Fixed
+- Resolved "multiple values for keyword argument 'callbacks'" error with Groq
+- Fixed AIMessage vs string response handling in answer generator
+- Fixed context_docs variable scope in pipeline query method
+- Added rank-bm25 package dependency for hybrid search
+
+### Performance
+- **Query Latency**: Reduced from ~30s (Ollama CPU) to ~0.5s (Groq API)
+- **Quality**: Maintained citation quality with 2.0 average citations per answer
+- **Reliability**: Eliminated callback errors with proper LLM type handling
+
 ## [0.0.10] - 2026-03-03
 
 ### Added

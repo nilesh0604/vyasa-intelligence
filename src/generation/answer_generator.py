@@ -118,19 +118,37 @@ class AnswerGenerator:
         )
 
         # Generate answer
-        callbacks = [self.callback_handler] if self.enable_tracing else None
         start_time = time.time()
 
         try:
-            answer = self.llm.invoke(prompt, callbacks=callbacks)
+            # Handle different LLM types
+            if "groq" in str(type(self.llm)).lower():
+                # For Groq/ChatGroq, don't pass callbacks at all
+                answer = self.llm.invoke(prompt)
+            else:
+                # For other LLMs, use callbacks if tracing is enabled
+                if self.enable_tracing:
+                    callbacks = [self.callback_handler]
+                    answer = self.llm.invoke(prompt, callbacks=callbacks)
+                else:
+                    answer = self.llm.invoke(prompt)
+
             generation_time = time.time() - start_time
 
+            # Handle different response types
+            if hasattr(answer, "content"):
+                # For ChatGroq and other chat models
+                answer_text = answer.content
+            else:
+                # For LLMs that return strings directly
+                answer_text = str(answer)
+
             # Extract citations
-            citations = self.prompt_assembler.extract_citations_from_answer(answer)
+            citations = self.prompt_assembler.extract_citations_from_answer(answer_text)
 
             # Validate citations
             validation_result = self.prompt_assembler.validate_answer_citations(
-                answer, context_docs
+                answer_text, context_docs
             )
 
             # Build sources list
@@ -151,7 +169,7 @@ class AnswerGenerator:
                 metadata.update(self.callback_handler.metrics)
 
             return {
-                "answer": answer.strip(),
+                "answer": answer_text.strip(),
                 "citations": citations,
                 "sources": sources,
                 "metadata": metadata,

@@ -1,0 +1,51 @@
+[
+  {
+    "question": "Who is Arjuna?",
+    "answer": "Arjuna is the one to whom Krishna is speaking and providing guidance, as evident from the context where Krishna says, \"fight, O Arjuna\" [Bhishma Parva, 3] and Arjuna asks Krishna a question [Bhishma Parva, 4].",
+    "citations": [
+      "[Bhishma Parva, 3]",
+      "[Bhishma Parva, 4]"
+    ],
+    "sources": [],
+    "time": 0.5984349250793457
+  },
+  {
+    "question": "What is the Bhagavad Gita?",
+    "answer": "The Bhagavad Gita is the eternal wisdom taught by Krishna to Arjuna on the eve of the great battle in the field of Kurukshetra [Bhishma Parva, 1]. It is the words of Krishna that dispelled Arjuna's delusion and helped him regain his memory, leading him to stand firm and act according to Krishna's word [Bhishma Parva, 1].",
+    "citations": [
+      "[Bhishma Parva, 1]",
+      "[Bhishma Parva, 1]"
+    ],
+    "sources": [],
+    "time": 0.6619699001312256
+  },
+  {
+    "question": "Who fought in the Kurukshetra war?",
+    "answer": "The context provided does not explicitly mention all the participants of the Kurukshetra war. However, it does mention the Kauravas [Bhishma Parva, 2], Duryodhana and his brothers [Bhishma Parva, 2], and the Pandavas (implied by the mention of Arjuna) [Bhishma Parva, 2], as well as other kings of the earth [Bhishma Parva, 2]. \n\nTherefore, based on the provided context, the participants mentioned are: \n- The Kauravas \n- The Pandavas (represented by Arjuna) \n- Duryodhana and his brothers \n- Other kings of the earth \n\n[Bhishma Parva, 2]",
+    "citations": [
+      "[Bhishma Parva, 2]",
+      "[Bhishma Parva, 2]",
+      "[Bhishma Parva, 2]",
+      "[Bhishma Parva, 2]",
+      "[Bhishma Parva, 2]"
+    ],
+    "sources": [],
+    "time": 0.551393985748291
+  },
+  {
+    "question": "What are the Pandavas' names?",
+    "answer": "I cannot find this information in the Mahabharata text provided. The text mentions the Pandavas as a group, but it does not explicitly list their individual names [Adi Parva, 1-5].",
+    "citations": [
+      "[Adi Parva, 1-5]"
+    ],
+    "sources": [],
+    "time": 0.3347148895263672
+  },
+  {
+    "question": "Who is Drona's most famous student?",
+    "answer": "I cannot find this information in the Mahabharata text provided.",
+    "citations": [],
+    "sources": [],
+    "time": 0.2206268310546875
+  }
+]

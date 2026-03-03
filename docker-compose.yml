@@ -5,8 +5,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      LLM_PROVIDER: ollama
-      OLLAMA_BASE_URL: http://host.docker.internal:11434   # Ollama runs on host
+      LLM_PROVIDER: groq
       CHROMA_PERSIST_DIR: /data/chroma
       BM25_INDEX_PATH: /data/bm25_index.pkl
       REDIS_URL: redis://redis:6379

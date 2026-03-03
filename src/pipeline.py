@@ -31,6 +31,7 @@ class RAGPipeline:
         cache_type: str = "memory",
         redis_url: Optional[str] = None,
         enable_guardrails: bool = True,
+        enable_tracing: bool = True,
     ):
         """Initialize the RAG pipeline.
 
@@ -44,6 +45,7 @@ class RAGPipeline:
             cache_type: Type of cache ('memory' or 'redis')
             redis_url: Redis URL for distributed cache
             enable_guardrails: Whether to enable content guardrails
+            enable_tracing: Whether to enable LangSmith tracing
         """
         # Set default paths
         self.chroma_dir = chroma_dir or os.getenv("CHROMA_PERSIST_DIR", "./data/chroma")
@@ -64,6 +66,7 @@ class RAGPipeline:
         self.generator = AnswerGenerator(
             llm_provider=llm_provider,
             llm_model=llm_model,
+            enable_tracing=enable_tracing,
         )
 
         # Initialize cache
@@ -136,6 +139,7 @@ class RAGPipeline:
                     return response
 
             # Check cache
+            context_docs = None  # Initialize context_docs
             if use_cache is not False and self.cache:
                 # First, perform retrieval to get context hash
                 retrieval_start = time.time()
