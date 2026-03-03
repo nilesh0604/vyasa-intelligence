@@ -11,6 +11,50 @@ Vyasa Intelligence provides intelligent answers to questions about the Mahabhara
 - **Production-ready**: Containerized with Docker, Kubernetes-ready, CI/CD pipeline
 - **Quality Gates**: Ragas evaluation with faithfulness ≥ 0.85, answer relevancy ≥ 0.80
 
+## Architecture
+
+### Retrieval Pipeline (M2)
+
+The retrieval pipeline implements a sophisticated hybrid search system with the following components:
+
+#### 1. Query Classification
+- **Types**: Entity, Philosophical, Narrative, Conceptual, Temporal, Comparative
+- **Method**: Combines pattern matching, keyword analysis, and semantic similarity
+- **Purpose**: Determines optimal retrieval strategy for each query type
+
+#### 2. Hybrid Search
+- **BM25 Retrieval**: Keyword-based search with tokenization
+- **Dense Retrieval**: Semantic search using BGE-base-en embeddings
+- **Reciprocal Rank Fusion (RRF)**: Merges results with configurable weights
+
+#### 3. Advanced Features
+- **Query Expansion**: Adds Mahabharata-specific synonyms
+- **HyDE**: Generates hypothetical documents for better semantic matching
+- **Diversity Reranking**: Ensures result diversity
+- **Contextual Retrieval**: Uses conversation history for better results
+
+#### 4. Reranking
+- **Cross-Encoder**: BGE-reranker-base for precise relevance scoring
+- **Multi-stage**: Coarse-to-fine reranking pipeline
+- **Fallback**: Keyword-based reranking when models unavailable
+
+### Flow Diagram
+
+```mermaid
+graph TD
+    A[Query] --> B[Query Classification]
+    B --> C[Strategy Selection]
+    C --> D[Query Expansion/HyDE]
+    D --> E[Hybrid Search]
+    E --> F[BM25 Retrieval]
+    E --> G[Dense Retrieval]
+    F --> H[RRF Fusion]
+    G --> H
+    H --> I[Apply Filters]
+    I --> J[Reranking]
+    J --> K[Final Results]
+```
+
 ## Technology Stack
 
 - **Backend**: Python 3.11+ with FastAPI
@@ -95,12 +139,13 @@ Vyasa Intelligence provides intelligent answers to questions about the Mahabhara
 - [ ] Create Mahabharata-aware chunker
 - [ ] Build ChromaDB and BM25 indices
 
-### Phase 2: Retrieval Pipeline
-- [ ] Dense retriever with ChromaDB
-- [ ] BM25 retriever
-- [ ] Hybrid retrieval with RRF
-- [ ] Query classifier
-- [ ] Reranker
+### Phase 2: Retrieval Pipeline ✅
+- [x] Query classification with Mahabharata-aware types
+- [x] Hybrid search (BM25 + dense) with RRF fusion
+- [x] Cross-encoder reranking
+- [x] Adaptive retrieval strategies
+- [x] Diversity-aware reranking
+- [x] Contextual retrieval with conversation history
 
 ### Phase 3: Generation
 - [ ] Prompt templates with citations

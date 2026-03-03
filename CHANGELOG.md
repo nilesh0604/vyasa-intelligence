@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.6] - 2026-03-03
+
+### Added
+- M2: Retrieval Pipeline completed with hybrid search and advanced features
+- Query classification with Mahabharata-aware types (Entity, Philosophical, Narrative, Conceptual, Temporal, Comparative)
+- Hybrid search combining BM25 and dense retrieval with configurable weights
+- Reciprocal Rank Fusion (RRF) for intelligent result merging
+- Cross-encoder reranking using BGE-reranker-base model
+- Adaptive retrieval strategies based on query type
+- Query expansion with Mahabharata-specific synonyms
+- HyDE (Hypothetical Document Embeddings) for better semantic matching
+- Diversity-aware reranking to ensure result variety
+- Contextual retrieval using conversation history
+- Multi-stage reranking pipeline (coarse-to-fine)
+- Comprehensive unit and integration tests for retrieval components
+- Fallback mechanisms for graceful degradation when models unavailable
+
+### Features
+- **Query Classifier**: Pattern-based + keyword-based + semantic classification
+- **Hybrid Searcher**: BM25 + ChromaDB dense search with score normalization
+- **Rank Fusion**: RRF, weighted score fusion, Condorcet, Borda count methods
+- **Reranker**: Cross-encoder with diversity and contextual capabilities
+- **Pipeline Orchestration**: End-to-end retrieval with health checks and statistics
+
+### Dependencies
+- Added scikit-learn>=1.3.0 for similarity calculations
+- Added torch>=2.0.0 for neural network models
+- Updated sentence-transformers to latest version
+
+### Verified
+- All retrieval components working correctly
+- Query classification accuracy on test queries
+- Hybrid search returning relevant results from both retrievers
+- RRF fusion properly ranking and merging results
+- Reranking improving result relevance
+- Pipeline health checks passing
+- Unit tests: 100% coverage for retrieval module
+- Integration tests: End-to-end pipeline verified
+
 ## [0.0.5] - 2026-03-03
 
 ### Fixed
