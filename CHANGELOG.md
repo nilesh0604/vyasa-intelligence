@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.5] - 2026-03-03
+
+### Fixed
+- Security and lint issues in ingestion pipeline
+- Added nosec comments for pickle usage (trusted internal data only)
+- Fixed bare except clause in build_index.py
+- Removed unused variable in build_index.py main()
+- All pre-commit hooks now passing (black, isort, bandit, ruff)
+
 ## [0.0.4] - 2026-03-03
 
 ### Added
