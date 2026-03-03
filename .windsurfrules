@@ -1,0 +1,112 @@
+# Vyasa Intelligence - Project Rules
+
+## Technology Stack & Local Environment
+### Development Environment Setup
+- **Developer**: Solo Developer
+- **Machine**: MacBook Pro M1, 32GB RAM, Sequoia OS
+- **Containerization**: Docker with Colima/Rancher Desktop
+- **OS**: macOS Sequoia
+
+### Port Management
+- Never use port 5000 for any application
+- Use npx serve for static HTML/CSS/JS applications
+- API runs on port 8000
+- Gradio UI runs on port 7860
+- Redis on port 6379
+- Ollama on port 11434
+
+### Default Technology Stack
+- **Backend**: Python 3.11+ with FastAPI
+- **Frontend**: Gradio for demos, React for web apps
+- **Database**: ChromaDB (vector), Redis (cache)
+- **LLM**: Ollama (local) → Groq (production)
+- **Embeddings**: BAAI/bge-base-en-v1.5 (local)
+- **Testing**: pytest + Ragas evaluation
+- **CI/CD**: GitHub Actions with 4-gate pipeline
+
+## Project-Specific Rules
+
+### RAG System Architecture
+- **Corpus**: Mahabharata (~200,000 verses, ~4-5M tokens)
+- **Chunking**: Mahabharata-aware hierarchical chunking by Parva/Adhyaya
+- **Retrieval**: Hybrid (BM25 + dense) with Reciprocal Rank Fusion
+- **Reranking**: BGE cross-encoder or ColBERT
+- **Generation**: LLM with strict citation format [Parva, Section]
+
+### Code Standards
+- **Python**: Follow PEP 8, use Black for formatting
+- **Type Hints**: Required for all functions
+- **Documentation**: Docstrings for all modules and classes
+- **Error Handling**: Proper exception handling with logging
+- **Environment**: Use .env for secrets, never commit
+
+### Development Workflow
+- **Branch Strategy**: main (production) ← develop ← feature/*
+- **Commits**: Conventional commits (feat:, fix:, docs:, etc.)
+- **Quality Gates**: 
+  - Unit/integration tests must pass
+  - Ragas evaluation: faithfulness ≥ 0.85, answer relevancy ≥ 0.80
+  - Security scan: no HIGH severity issues
+- **Deployment**: Local → Docker → K8s → Cloud (AWS/Azure)
+
+### Data Management
+- **Raw Data**: Store in data/raw/ (never commit large files)
+- **Processed Data**: Store in data/processed/
+- **Vector Index**: ChromaDB in data/chroma/
+- **BM25 Index**: Pickle file in data/bm25_index.pkl
+- **Golden Dataset**: data/processed/golden_dataset.jsonl
+
+### Security & Privacy
+- **PII Redaction**: Use Presidio for PII detection/anonymization
+- **API Keys**: Store in environment variables or AWS Secrets Manager
+- **Guardrails**: Implement content safety (AWS Bedrock/Azure Content Safety)
+- **RBAC**: Role-based access control for document access
+
+### Performance Requirements
+- **API Latency**: P50 < 1s, P95 < 3s, P99 < 5s
+- **Retrieval Time**: < 200ms for vector search
+- **LLM Generation**: < 2s (Groq), < 30s (Ollama CPU)
+- **Memory Usage**: Optimize for M1 Mac (32GB RAM)
+
+### Testing Strategy
+- **Unit Tests**: tests/unit/ - Test individual components
+- **Integration Tests**: tests/integration/ - Test pipeline flows
+- **Quality Gates**: tests/integration/test_quality_gates.py
+- **Load Tests**: Use Locust or k6 for stress testing
+- **Evaluation**: Ragas metrics on golden dataset
+
+### Documentation Requirements
+- **README.md**: Project overview and setup instructions
+- **CHANGELOG.md**: Track all changes
+- **API Docs**: FastAPI auto-docs at /docs
+- **Architecture**: Diagrams using Mermaid
+- **Deployment**: Terraform/Bicep IaC documentation
+
+### LLM Integration Rules
+- **Provider Abstraction**: Use factory pattern for Ollama/Groq/Bedrock
+- **Prompt Templates**: Use structured templates with citations
+- **Fallback**: Always have local Ollama as fallback
+- **Tracing**: Enable LangSmith for observability
+- **Cost Management**: Prefer Groq free tier, monitor usage
+
+### Container & Deployment Rules
+- **Dockerfile**: Multi-stage builds, minimal base images
+- **Docker Compose**: Local development setup
+- **Kubernetes**: Use Rancher Desktop for local K8s
+- **Resource Limits**: Set CPU/memory limits appropriately
+- **Health Checks**: Always include /health endpoint
+
+### Monitoring & Observability
+- **Metrics**: CloudWatch/Azure Monitor integration
+- **Tracing**: LangSmith for RAG pipeline traces
+- **Logging**: Structured logging with appropriate levels
+- **Alerts**: Set up for latency, errors, and quality metrics
+
+## Special Instructions for AI Assistant
+- When implementing retrieval, always consider the Mahabharata's hierarchical structure
+- For entity queries, prioritize BM25 retrieval
+- For philosophical questions, use HyDE query expansion
+- Always include proper citations in generated answers
+- Test evaluation gates before any deployment
+- Consider cost implications of LLM choices
+- Maintain backward compatibility when switching providers
