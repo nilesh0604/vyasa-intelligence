@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.9] - 2026-03-03
+
+### Added
+- M5: Containerisation with Docker and Docker Compose
+- Dockerfile for API service with multi-stage build using uv
+- Dockerfile.gradio for Gradio UI container
+- docker-compose.yml orchestrating API, Redis, and Gradio services
+- .dockerignore for optimized build context
+- Gradio app.py for web UI with API integration
+
+### Features
+- **Containerised API**: FastAPI service running in Docker with pre-built ChromaDB and BM25 indices
+- **Redis Cache**: Dedicated Redis container for caching functionality
+- **Gradio UI**: Web interface accessible at localhost:7860 with role-based queries
+- **Docker Compose**: Single-command deployment of all services
+- **Volume Mounting**: Persistent data directory mounting for index files
+
+### Verified
+- All containers building and running successfully
+- API health endpoint responding at localhost:8000
+- Query endpoint functional with placeholder responses
+- Redis container active and responding (PONG)
+- Gradio UI accessible at localhost:7860
+- No errors in container logs
+- Docker compose reproducing M3 results as expected
+
 ## [0.0.8] - 2026-03-03
 
 ### Added

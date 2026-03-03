@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      LLM_PROVIDER: ollama
+      OLLAMA_BASE_URL: http://host.docker.internal:11434   # Ollama runs on host
+      CHROMA_PERSIST_DIR: /data/chroma
+      BM25_INDEX_PATH: /data/bm25_index.pkl
+      REDIS_URL: redis://redis:6379
+    env_file: .env
+    volumes:
+      - ./data:/data
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  gradio:
+    build:
+      context: .
+      dockerfile: Dockerfile.gradio
+    ports:
+      - "7860:7860"
+    environment:
+      API_BASE_URL: http://api:8000
+    depends_on:
+      - api
