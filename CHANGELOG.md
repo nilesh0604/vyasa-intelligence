@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.8] - 2026-03-03
+
+### Added
+- M4: Evaluation module completed with Ragas integration and quality gates
+- Golden dataset with 15 Mahabharata-specific Q&A pairs covering different difficulty levels
+- Ragas evaluation pipeline supporting faithfulness, answer relevancy, context precision, context recall, and answer similarity metrics
+- Quality gate system with configurable thresholds (faithfulness ≥ 0.85, answer relevancy ≥ 0.80)
+- Quality gate evaluator with weighted scoring and improvement suggestions
+- Evaluation comparison tool for tracking performance across runs
+- Comprehensive test suite for evaluation components (unit and integration tests)
+- Evaluation CLI script with mock and real RAG pipeline support
+
+### Features
+- **Golden Dataset**: Curated Q&A pairs with contexts and metadata (parva, section, difficulty, question type)
+- **MahabharataEvaluator**: End-to-end evaluation using Ragas metrics with custom quality gates
+- **QualityGateEvaluator**: Flexible quality gate system with weighted scoring and strict/non-strict modes
+- **Quality Gates**: Default thresholds optimized for Mahabharata domain (faithfulness: 0.85, answer_relevancy: 0.80, context_precision: 0.85, context_recall: 0.80, answer_similarity: 0.75)
+- **Evaluation Reports**: Detailed JSON results, CSV summaries, and human-readable quality gate reports
+- **Performance Comparison**: Compare multiple evaluation runs with best/worst metric tracking
+
+### Dependencies
+- Added ragas>=0.4.3 for RAG evaluation metrics
+- Added datasets>=4.6.1 for data handling (already present)
+
+### Verified
+- Golden dataset loading and validation
+- Quality gate evaluation with all metrics
+- Ragas integration producing accurate scores
+- Quality gate reports with improvement suggestions
+- Evaluation comparison across multiple runs
+- Unit tests: 100% coverage for quality gates module
+- Integration tests: End-to-end evaluation pipeline verified
+
 ## [0.0.7] - 2026-03-03
 
 ### Added
