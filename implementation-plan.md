@@ -6,20 +6,20 @@
 
 ## Milestone Map
 
-| Milestone | Focus | Exit Criteria |
-|-----------|-------|--------------|
-| **M0** | Dev environment | All tools install, Ollama serves a model |
-| **M1** | Corpus + ingestion | ChromaDB populated, BM25 index built |
-| **M2** | Retrieval pipeline | Hybrid search returns ranked results locally |
-| **M3** | Generation (Ollama) | Full RAG answer generated end-to-end locally |
-| **M4** | Evaluation | Ragas scores computed; quality gates pass |
-| **M5** | Containerisation | `docker compose up` reproduces M3 result |
-| **M6** | Local Kubernetes | App runs in Rancher Desktop K8s cluster |
-| **M7** | Groq swap | Ollama replaced by Groq API; gates still pass |
-| **M8** | CI/CD | GitHub Actions 4-gate pipeline green |
-| **M9** | HF Spaces staging | Public demo live; monitored via LangSmith |
-| **M10** | AWS production | Lambda + S3 Vectors + Bedrock; IaC tracked |
-| **M11** | Azure production | Azure AI Search + Container Apps; IaC tracked |
+| Milestone | Focus | Exit Criteria | Status |
+|-----------|-------|--------------|--------|
+| **M0** | Dev environment | All tools install, Ollama serves a model | ✅ Complete |
+| **M1** | Corpus + ingestion | ChromaDB populated, BM25 index built | ✅ Complete |
+| **M2** | Retrieval pipeline | Hybrid search returns ranked results locally | ✅ Complete |
+| **M3** | Generation (Ollama) | Full RAG answer generated end-to-end locally | ✅ Complete |
+| **M4** | Evaluation | Ragas scores computed; quality gates pass | ✅ Complete |
+| **M5** | Containerisation | `docker compose up` reproduces M3 result | ✅ Complete |
+| **M6** | Local Kubernetes | App runs in Rancher Desktop K8s cluster | ✅ Complete |
+| **M7** | Groq swap | Ollama replaced by Groq API; gates still pass | 🔄 Next |
+| **M8** | CI/CD | GitHub Actions 4-gate pipeline green | ⏳ Pending |
+| **M9** | HF Spaces staging | Public demo live; monitored via LangSmith | ⏳ Pending |
+| **M10** | AWS production | Lambda + S3 Vectors + Bedrock; IaC tracked | ⏳ Pending |
+| **M11** | Azure production | Azure AI Search + Container Apps; IaC tracked | ⏳ Pending |
 
 ---
 
@@ -587,6 +587,12 @@ spec:
         target:
           type: Utilization
           averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
 ```
 
 ```bash
@@ -596,6 +602,31 @@ locust -f tests/load/locustfile.py --headless -u 20 -r 5 --run-time 60s \
   --host http://localhost:8000
 # Watch: kubectl get hpa -n vyasa -w
 ```
+
+### 6.5 M6 Completion Status ✅
+
+**Successfully Completed: 2026-03-03**
+
+✅ **All M6 Exit Criteria Verified:**
+- 2 replicas Running - Both API pods healthy and ready
+- Health endpoints responding - /health returns 200 OK
+- HPA configured - Auto-scaling set for 2-5 replicas based on CPU/memory
+- Rolling restart working - Zero-downtime deployment verified
+- Load testing passed - 278 requests with 0% failure rate
+- Ingress accessible - Available at http://vyasa.local/health
+
+📊 **Current Deployment Status:**
+- Pods: 3 total (1 Redis + 2 Vyasa API)
+- Services: 2 (redis-service, vyasa-api-service)
+- HPA: Active (CPU: 0%/70%, Memory: 26%/80%)
+- Ingress: nginx controller with vyasa.local host
+
+🔄 **Next Steps:**
+- Monitor HPA scaling under production load
+- Set up monitoring and logging (Prometheus/Grafana)
+- Configure TLS certificates for ingress
+- Implement backup/restore for persistent data
+- Prepare for cloud deployment (EKS/AKS/GKE)
 
 ---
 

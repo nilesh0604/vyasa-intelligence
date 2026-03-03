@@ -223,17 +223,39 @@ docker compose up --build
 # Redis: localhost:6379
 ```
 
-## Kubernetes Deployment
+## Kubernetes Deployment ✅
+
+The application is fully Kubernetes-ready and has been successfully deployed to Rancher Desktop with all production features:
 
 ```bash
-# Apply manifests
+# One-command deployment
+./deploy-k8s.sh
+
+# Or manual deployment
 kubectl apply -f k8s/
+kubectl create secret generic vyasa-secrets --from-env-file=.env -n vyasa
 
-# Check deployment
+# Check deployment status
 kubectl get pods -n vyasa
+kubectl get hpa -n vyasa
+kubectl get ingress -n vyasa
+```
 
-# Port-forward for testing
-kubectl port-forward svc/vyasa-api 8000:80 -n vyasa
+### Deployment Features
+- **Auto-scaling**: HPA configured (2-5 replicas) based on CPU/memory
+- **Health Monitoring**: Readiness and liveness probes
+- **Load Balancing**: Ingress accessible at http://vyasa.local
+- **Resource Management**: Proper CPU/memory limits
+- **Zero-downtime**: Rolling updates and restarts
+
+### Access Methods
+```bash
+# Via Ingress (add to /etc/hosts: 127.0.0.1 vyasa.local)
+curl http://vyasa.local/health
+
+# Via port-forward
+kubectl port-forward svc/vyasa-api-service 8000:80 -n vyasa
+curl http://localhost:8000/health
 ```
 
 ## Quality Gates
