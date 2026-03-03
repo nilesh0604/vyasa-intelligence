@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4] - 2026-03-03
+
+### Added
+- M1: Corpus + Ingestion pipeline completed
+- Document loader for Mahabharata text files with automatic parva detection
+- Mahabharata-aware chunker preserving parva/adhyaya hierarchy
+- Entity extractor for characters, places, weapons, and philosophical concepts
+- PII redaction using Microsoft Presidio (optional)
+- ChromaDB vector index with BGE-base-en-v1.5 embeddings
+- BM25 index for keyword search
+- Ingestion orchestration script with full pipeline automation
+- Validation script for index verification and quality checks
+
+### Statistics
+- Documents processed: 2 (Adi Parva, Bhishma Parva samples)
+- Chunks created: 46
+- Average chunk size: 65 tokens
+- Character coverage: 100%
+- Place coverage: 100%
+- Embedding time: 0.51s
+- Total ingestion time: 0.58s
+
+### Verified
+- ChromaDB vector search working correctly
+- BM25 keyword search returning relevant results
+- Metadata enrichment with entities and hierarchical structure
+- Search latency: < 300ms for all test queries
+
 ## [0.0.3] - 2026-03-03
 
 ### Added
