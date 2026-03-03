@@ -258,6 +258,65 @@ kubectl port-forward svc/vyasa-api-service 8000:80 -n vyasa
 curl http://localhost:8000/health
 ```
 
+## CI/CD Pipeline
+
+The project implements a comprehensive 4-gate CI/CD pipeline using GitHub Actions:
+
+### Pipeline Gates
+
+1. **Gate 1: Code Quality & Linting**
+   - Black code formatting
+   - isort import sorting
+   - Ruff linting
+   - MyPy type checking
+   - Bandit security linting
+
+2. **Gate 2: Unit Tests**
+   - pytest with coverage reporting
+   - Upload coverage to Codecov
+   - Minimum 80% coverage requirement
+
+3. **Gate 3: Integration Tests**
+   - API endpoint testing
+   - Database integration
+   - Redis connectivity
+   - Service health checks
+
+4. **Gate 4: Quality Gates Evaluation**
+   - Ragas evaluation metrics
+   - Faithfulness ≥ 0.85
+   - Answer relevancy ≥ 0.80
+   - Overall score ≥ 80%
+
+### Workflows
+
+- **CI/CD Pipeline** (`.github/workflows/ci-cd.yml`): Main pipeline with 4 gates
+- **Security Scan** (`.github/workflows/security.yml`): Comprehensive security scanning
+- **Dependency Update** (`.github/workflows/dependency-update.yml`): Automated dependency updates
+- **Release** (`.github/workflows/release.yml`): Automated releases with Helm chart
+
+### Required Secrets
+
+Add these secrets to your GitHub repository:
+
+```bash
+# Docker Hub (for container registry)
+DOCKER_USERNAME=your_docker_username
+DOCKER_PASSWORD=your_docker_token
+
+# Optional: Snyk for dependency scanning
+SNYK_TOKEN=your_snyk_token
+
+# Optional: Gitleaks license
+GITLEAKS_LICENSE=your_gitleaks_license
+```
+
+### Local Scripts
+
+- `scripts/quality-gates.sh`: Run quality gates locally
+- `scripts/deploy-k8s.sh`: Deploy to Kubernetes
+- `scripts/smoke-test.sh`: Run smoke tests against deployed service
+
 ## Quality Gates
 
 The project maintains strict quality standards:
@@ -271,6 +330,11 @@ Run evaluation:
 python -m src.evaluation.ragas_eval \
   --dataset data/golden_dataset.jsonl \
   --output reports/ragas_eval.json
+```
+
+Run quality gates locally:
+```bash
+./scripts/quality-gates.sh
 ```
 
 ## Contributing

@@ -5,18 +5,17 @@ import os
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Load environment variables
-from dotenv import load_dotenv
 load_dotenv(project_root / ".env")
 
 # Set environment variables for Groq
 os.environ["LLM_PROVIDER"] = "groq"
-
-# Disable LangSmith tracing to avoid API issues
 os.environ["LANGCHAIN_TRACING_V2"] = "false"
 
 from src.evaluation.evaluator import MahabharataEvaluator
@@ -41,7 +40,6 @@ def main():
         sys.exit(1)
 
     # Load questions from golden dataset
-    import json
 
     questions = []
     with open(golden_dataset_path, "r") as f:

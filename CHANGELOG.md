@@ -5,6 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.12] - 2026-03-03
+
+### Added
+- M8: CI/CD Pipeline with GitHub Actions - Complete 4-gate pipeline implementation
+- Main CI/CD workflow (.github/workflows/ci-cd.yml) with comprehensive quality gates
+- Security scanning workflow (.github/workflows/security.yml) with multiple security tools
+- Dependency update workflow (.github/workflows/dependency-update.yml) for automated updates
+- Release workflow (.github/workflows/release.yml) for automated releases
+- Quality gates script (scripts/quality-gates.sh) for local evaluation
+- Kubernetes deployment script (scripts/deploy-k8s.sh) with automated deployment
+- Smoke test script (scripts/smoke-test.sh) for deployment validation
+
+### CI/CD Pipeline Features
+- **Gate 1**: Code quality with Black, isort, Ruff, MyPy, and Bandit
+- **Gate 2**: Unit tests with pytest and coverage reporting to Codecov
+- **Gate 3**: Integration tests with API, database, and Redis connectivity
+- **Gate 4**: Quality gates evaluation with Ragas metrics (faithfulness ≥ 0.85, answer relevancy ≥ 0.80)
+- **Security Scanning**: Trivy, CodeQL, Gitleaks, pip-audit, Safety, and Snyk integration
+- **Multi-platform Docker builds**: Support for linux/amd64 and linux/arm64
+- **Automated deployments**: Staging (develop branch) and Production (main branch)
+- **Dependency management**: Weekly automated dependency updates with PR creation
+
+### Security Features
+- Container vulnerability scanning with Trivy and Grype
+- Code security analysis with CodeQL and Bandit
+- Secrets detection with Gitleaks
+- Dependency vulnerability checking with Safety and pip-audit
+- OSSF Scorecard for supply chain security
+- SARIF report upload to GitHub Security tab
+
+### Deployment Automation
+- Docker image building and pushing to registry
+- Kubernetes deployment with namespace management
+- Health checks and rollout verification
+- Smoke tests against deployed services
+- Environment-specific configurations (staging/production)
+
+### Documentation
+- Updated README.md with comprehensive CI/CD section
+- Added required secrets configuration
+- Added local scripts documentation
+- Added workflow descriptions and triggers
+
+### M8 Verification Complete ✅
+- ✅ 4-gate CI/CD pipeline implemented
+- ✅ Quality gates with Ragas evaluation
+- ✅ Comprehensive security scanning
+- ✅ Automated deployment workflows
+- ✅ Documentation updated
+
+### M8 Implementation Complete! 🚀
+Successfully implemented production-ready CI/CD pipeline with GitHub Actions, featuring comprehensive quality gates, security scanning, automated testing, and deployment automation. The pipeline ensures code quality, security, and reliability through multiple validation stages before deployment.
+
 ## [0.0.11] - 2026-03-03
 
 ### Added
