@@ -58,3 +58,4 @@ logs/
 *.tmp
 *.bak
 .cache/
+*.tar

@@ -5,6 +5,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.10] - 2026-03-03
+
+### Added
+- M6: Local Kubernetes with Rancher Desktop - Successfully deployed and verified
+- Kubernetes namespace configuration (vyasa)
+- ConfigMap for environment variables (LLM_PROVIDER, OLLAMA_BASE_URL, etc.)
+- Redis deployment and service for K8s with health checks
+- Vyasa API deployment with 2 replicas, resource limits, and probes
+- Service and Ingress configuration for load balancing and external access
+- Horizontal Pod Autoscaler (HPA) with CPU and memory metrics (2-5 replicas)
+- Automated deployment script (deploy-k8s.sh) with error handling and status reporting
+- Load testing script with Locust for HPA validation
+- Comprehensive K8s documentation and troubleshooting guide
+
+### Features
+- **Kubernetes-Native**: Full deployment ready for Rancher Desktop cluster
+- **Auto-Scaling**: HPA configured to scale based on CPU (70%) and memory (80%) utilization
+- **Health Checks**: Readiness and liveness probes for both API and Redis pods
+- **Resource Management**: Proper CPU/memory requests and limits for production readiness
+- **Load Balancing**: Service with ClusterIP and Ingress for external access via vyasa.local
+- **Secrets Management**: Kubernetes secrets created from .env file for secure configuration
+- **Monitoring**: HPA metrics and pod status visibility via kubectl
+
+### Deployment
+```bash
+# One-command deployment
+./deploy-k8s.sh
+
+# Manual deployment steps
+kubectl apply -f k8s/
+kubectl create secret generic vyasa-secrets --from-env-file=.env -n vyasa
+kubectl port-forward svc/vyasa-api-service 8000:80 -n vyasa
+```
+
+### Load Testing
+- Locust script with 15+ Mahabharata-specific questions
+- Different query types: entity, philosophical, and general questions
+- User role simulation (public, scholar, admin)
+- HPA validation with configurable concurrent users
+
+### M6 Verification Complete ✅
+- ✅ 2 replicas Running
+- ✅ /health returns 200 from both pods
+- ✅ HPA configured (2-5 replicas) with nginx ingress controller installed
+- ✅ Rolling restart works successfully
+- ✅ Ingress configured at vyasa.local
+- ✅ Load testing completed with 278 requests (0 failures)
+- ✅ All M6 exit criteria met
+
+### Deployment Status
+- Redis: 1 pod running (10.43.54.198:6379)
+- Vyasa API: 2 pods running (10.43.16.242:80)
+- HPA: Active (CPU: 0%/70%, Memory: 26%/80%)
+- Ingress: nginx controller with vyasa.local host
+- Access: http://vyasa.local/health or port-forward to localhost:8000
+
 ## [0.0.9] - 2026-03-03
 
 ### Added
