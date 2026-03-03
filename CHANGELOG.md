@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.7] - 2026-03-03
+
+### Added
+- M3: Generation Pipeline completed with full RAG capabilities
+- LLM factory abstraction supporting Ollama (local) and Groq (production) providers
+- Mahabharata-specific prompt assembler with citation format [Parva, Section]
+- Answer generator with context-aware response generation
+- Content guardrails for safety and appropriate responses
+- Response caching with in-memory and Redis options
+- End-to-end RAG pipeline integrating retrieval and generation
+- CLI interface for interactive and single-query modes
+- Comprehensive test suite for generation components
+
+### Features
+- **LLM Factory**: Seamless switching between Ollama and Groq with environment variable control
+- **Prompt Assembler**: Role-aware prompts (public, scholar, admin) with citation requirements
+- **Answer Generator**: Context-based generation with citation validation and metadata tracking
+- **Guardrails**: Input/output filtering with Mahabharata-aware content policies
+- **Caching**: Intelligent caching with context hashing and TTL support
+- **Pipeline**: Complete RAG flow with query classification and optimized retrieval
+
+### Dependencies
+- Added langchain-core for LLM abstractions
+- Added langchain-groq for Groq API integration
+- Added langchain-ollama for Ollama integration
+- Added redis (optional) for distributed caching
+
+### Verified
+- LLM factory correctly switching between providers
+- Prompt assembler generating properly formatted prompts with citations
+- Answer generator producing contextually accurate responses
+- Guardrails blocking inappropriate content while allowing valid queries
+- Caching improving response times for repeated queries
+- End-to-end pipeline generating complete answers with sources
+- CLI interface working in both interactive and single-query modes
+- Ollama integration tested with llama3.2 model
+- Citation validation ensuring all answers reference provided context
+
 ## [0.0.6] - 2026-03-03
 
 ### Added

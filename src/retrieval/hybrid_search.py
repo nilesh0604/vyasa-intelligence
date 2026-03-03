@@ -5,7 +5,7 @@ methods for the Mahabharata RAG system.
 """
 
 import logging
-import pickle
+import pickle  # nosec B403 - Used only for trusted internal data
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 
