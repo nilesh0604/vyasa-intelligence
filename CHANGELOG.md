@@ -31,14 +31,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - FastAPI application with health check and query endpoints
 - LLM factory abstraction for Ollama and Groq providers
-- Comprehensive README.md with setup instructions and API documentation
+- Comprehensive README.md with setup instructions and API documentation (234 lines)
 - Environment configuration template (.env.example)
 - Initial module structure (api, evaluation, generation, ingestion, retrieval, llm)
 - Data directories setup (raw, processed, chroma)
+- Project-specific development rules in .windsurfrules (113 lines)
+- Startup script (start.sh) for easy deployment
+- Updated .gitignore with project-specific patterns
 
 ### Updated
 - README.md with complete project overview and quick start guide
 - Project structure documentation
+- CHANGELOG.md with version history tracking
 
 ## [0.0.1] - 2026-03-03
 
