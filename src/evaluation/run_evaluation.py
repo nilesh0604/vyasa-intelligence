@@ -219,6 +219,7 @@ def main():
     evaluation_results = evaluator.evaluate(
         rag_results=rag_results,
         run_name=args.run_name,
+        mock=args.mock,
     )
 
     # Print final status

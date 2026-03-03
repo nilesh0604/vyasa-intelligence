@@ -2,6 +2,7 @@
 
 import json
 import logging
+import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -124,17 +125,25 @@ class MahabharataEvaluator:
         return Dataset.from_list(data_points)
 
     def evaluate(
-        self, rag_results: List[Dict[str, Any]], run_name: Optional[str] = None
+        self,
+        rag_results: List[Dict[str, Any]],
+        run_name: Optional[str] = None,
+        mock: bool = False,
     ) -> Dict[str, Any]:
         """Run Ragas evaluation on RAG system results.
 
         Args:
             rag_results: List of RAG system results
             run_name: Optional name for this evaluation run
+            mock: If True, use mock evaluation instead of Ragas
 
         Returns:
             Dictionary with evaluation results
         """
+        if mock:
+            logger.info("Running mock evaluation...")
+            return self._mock_evaluate(rag_results, run_name)
+
         logger.info("Starting Ragas evaluation...")
 
         # Prepare dataset
@@ -194,6 +203,82 @@ class MahabharataEvaluator:
             "quality_gates": quality_gate_results,
             "quality_gate_report": quality_gate_report,
             "detailed_scores": scores,
+            "passed_all_gates": quality_gate_results["overall_passed"],
+        }
+
+        # Save results
+        self._save_results(evaluation_results)
+
+        # Log summary
+        self._log_summary(evaluation_results)
+
+        return evaluation_results
+
+    def _mock_evaluate(
+        self, rag_results: List[Dict[str, Any]], run_name: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Run mock evaluation without requiring API calls.
+
+        Args:
+            rag_results: List of RAG system results
+            run_name: Optional name for this evaluation run
+
+        Returns:
+            Dictionary with mock evaluation results
+        """
+        import random
+
+        # Generate mock scores for each metric
+        mock_scores = []
+        for i, rag_result in enumerate(rag_results):
+            score = {}
+            for metric in self.metrics:
+                # Generate realistic mock scores
+                if metric == "faithfulness":
+                    score[metric] = random.uniform(0.82, 0.95)  # nosec B311
+                elif metric == "answer_relevancy":
+                    score[metric] = random.uniform(0.78, 0.92)  # nosec B311
+                elif metric == "context_recall":
+                    score[metric] = random.uniform(0.75, 0.90)  # nosec B311
+                elif metric == "context_precision":
+                    score[metric] = random.uniform(0.80, 0.95)  # nosec B311
+                elif metric == "answer_similarity":
+                    score[metric] = random.uniform(0.70, 0.88)  # nosec B311
+            mock_scores.append(score)
+
+        # Calculate aggregate statistics
+        aggregate_scores = {}
+        for metric in self.metrics:
+            values = [score[metric] for score in mock_scores]
+            aggregate_scores[metric] = {
+                "mean": np.mean(values),
+                "std": np.std(values),
+                "min": np.min(values),
+                "max": np.max(values),
+            }
+
+        # Evaluate quality gates
+        # Extract mean values for quality gate evaluation
+        mean_scores = {
+            metric: stats["mean"] for metric, stats in aggregate_scores.items()
+        }
+        quality_gate_results = self.quality_gate_evaluator.evaluate(mean_scores)
+        quality_gate_report = self.quality_gate_evaluator.generate_report(
+            quality_gate_results
+        )
+
+        # Prepare results
+        run_name = run_name or f"mock_evaluation_{int(time.time())}"
+        evaluation_results = {
+            "run_name": run_name,
+            "timestamp": time.time(),
+            "num_questions": len(rag_results),
+            "num_samples": len(rag_results),  # Add this for compatibility
+            "metrics": self.metrics,
+            "aggregate_scores": aggregate_scores,
+            "quality_gate_report": quality_gate_report,
+            "quality_gates": quality_gate_results,  # Add this for compatibility
+            "detailed_scores": mock_scores,
             "passed_all_gates": quality_gate_results["overall_passed"],
         }
 

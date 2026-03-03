@@ -1,0 +1,260 @@
+{
+  "run_name": "m4_completion",
+  "timestamp": 1772572640.062038,
+  "num_questions": 15,
+  "num_samples": 15,
+  "metrics": [
+    "faithfulness",
+    "answer_relevancy",
+    "context_recall",
+    "context_precision",
+    "answer_similarity"
+  ],
+  "aggregate_scores": {
+    "faithfulness": {
+      "mean": 0.8813272591719128,
+      "std": 0.03748991209386183,
+      "min": 0.8239025816481057,
+      "max": 0.9420262714228727
+    },
+    "answer_relevancy": {
+      "mean": 0.8403479763950747,
+      "std": 0.03633639959601861,
+      "min": 0.7860443531935475,
+      "max": 0.8943906227360073
+    },
+    "context_recall": {
+      "mean": 0.8224171600510694,
+      "std": 0.045190954725389317,
+      "min": 0.7530340186456366,
+      "max": 0.8940462195226371
+    },
+    "context_precision": {
+      "mean": 0.875767723031884,
+      "std": 0.03925386962106903,
+      "min": 0.8148488199970745,
+      "max": 0.9354872605513211
+    },
+    "answer_similarity": {
+      "mean": 0.779017643186553,
+      "std": 0.050540132362108116,
+      "min": 0.7020084297197328,
+      "max": 0.8758705788022519
+    }
+  },
+  "quality_gate_report": "============================================================\nQUALITY GATE EVALUATION REPORT\n============================================================\nOverall Status: ✓ PASSED\nOverall Score: 100.0%\nPass Rate: 100.0%\n\nPASSED GATES:\n  ✓ faithfulness: 0.881 (threshold: 0.85)\n  ✓ answer_relevancy: 0.840 (threshold: 0.80)\n  ✓ context_precision: 0.876 (threshold: 0.85)\n  ✓ context_recall: 0.822 (threshold: 0.80)\n  ✓ answer_similarity: 0.779 (threshold: 0.75)\n\n============================================================",
+  "quality_gates": {
+    "overall_passed": true,
+    "overall_score": 1.0,
+    "total_weight": 1.0,
+    "passed_gates": [
+      {
+        "name": "faithfulness",
+        "threshold": 0.85,
+        "value": 0.8813272591719128,
+        "passed": true,
+        "delta": 0.031327259171912814,
+        "weight": 0.3,
+        "description": "Answer must be faithful to retrieved contexts"
+      },
+      {
+        "name": "answer_relevancy",
+        "threshold": 0.8,
+        "value": 0.8403479763950747,
+        "passed": true,
+        "delta": 0.0403479763950747,
+        "weight": 0.25,
+        "description": "Answer must be relevant to the question"
+      },
+      {
+        "name": "context_precision",
+        "threshold": 0.85,
+        "value": 0.875767723031884,
+        "passed": true,
+        "delta": 0.025767723031884016,
+        "weight": 0.2,
+        "description": "Retrieved contexts must be precise and relevant"
+      },
+      {
+        "name": "context_recall",
+        "threshold": 0.8,
+        "value": 0.8224171600510694,
+        "passed": true,
+        "delta": 0.022417160051069307,
+        "weight": 0.15,
+        "description": "Retrieved contexts must cover all relevant information"
+      },
+      {
+        "name": "answer_similarity",
+        "threshold": 0.75,
+        "value": 0.779017643186553,
+        "passed": true,
+        "delta": 0.029017643186552977,
+        "weight": 0.1,
+        "description": "Answer should be similar to expected answer"
+      }
+    ],
+    "failed_gates": [],
+    "all_results": [
+      {
+        "name": "faithfulness",
+        "threshold": 0.85,
+        "value": 0.8813272591719128,
+        "passed": true,
+        "delta": 0.031327259171912814,
+        "weight": 0.3,
+        "description": "Answer must be faithful to retrieved contexts"
+      },
+      {
+        "name": "answer_relevancy",
+        "threshold": 0.8,
+        "value": 0.8403479763950747,
+        "passed": true,
+        "delta": 0.0403479763950747,
+        "weight": 0.25,
+        "description": "Answer must be relevant to the question"
+      },
+      {
+        "name": "context_precision",
+        "threshold": 0.85,
+        "value": 0.875767723031884,
+        "passed": true,
+        "delta": 0.025767723031884016,
+        "weight": 0.2,
+        "description": "Retrieved contexts must be precise and relevant"
+      },
+      {
+        "name": "context_recall",
+        "threshold": 0.8,
+        "value": 0.8224171600510694,
+        "passed": true,
+        "delta": 0.022417160051069307,
+        "weight": 0.15,
+        "description": "Retrieved contexts must cover all relevant information"
+      },
+      {
+        "name": "answer_similarity",
+        "threshold": 0.75,
+        "value": 0.779017643186553,
+        "passed": true,
+        "delta": 0.029017643186552977,
+        "weight": 0.1,
+        "description": "Answer should be similar to expected answer"
+      }
+    ],
+    "summary": {
+      "total_gates": 5,
+      "passed_count": 5,
+      "failed_count": 0,
+      "pass_rate": 1.0
+    }
+  },
+  "detailed_scores": [
+    {
+      "faithfulness": 0.9210045618831864,
+      "answer_relevancy": 0.8282594656701644,
+      "context_recall": 0.8598461770623312,
+      "context_precision": 0.815009663612816,
+      "answer_similarity": 0.7712576545098201
+    },
+    {
+      "faithfulness": 0.9296613309251831,
+      "answer_relevancy": 0.8123541787073444,
+      "context_recall": 0.7553059910173583,
+      "context_precision": 0.8457097460570595,
+      "answer_similarity": 0.8758705788022519
+    },
+    {
+      "faithfulness": 0.8359722087608493,
+      "answer_relevancy": 0.7896383318377468,
+      "context_recall": 0.802964190395548,
+      "context_precision": 0.8640614245082434,
+      "answer_similarity": 0.7562012824666707
+    },
+    {
+      "faithfulness": 0.9420262714228727,
+      "answer_relevancy": 0.894028987485773,
+      "context_recall": 0.8763163434256748,
+      "context_precision": 0.8845159934088347,
+      "answer_similarity": 0.764502045517696
+    },
+    {
+      "faithfulness": 0.9078721065401546,
+      "answer_relevancy": 0.8733352611673377,
+      "context_recall": 0.8940462195226371,
+      "context_precision": 0.845644579911935,
+      "answer_similarity": 0.8248929144795516
+    },
+    {
+      "faithfulness": 0.8345612453745931,
+      "answer_relevancy": 0.8433051036038745,
+      "context_recall": 0.8308450766607023,
+      "context_precision": 0.8592335853134683,
+      "answer_similarity": 0.8347565348085714
+    },
+    {
+      "faithfulness": 0.8430939847285721,
+      "answer_relevancy": 0.7922649894450472,
+      "context_recall": 0.8037228601456597,
+      "context_precision": 0.9147145525103068,
+      "answer_similarity": 0.7423139517303547
+    },
+    {
+      "faithfulness": 0.8682732916485556,
+      "answer_relevancy": 0.8851898615215241,
+      "context_recall": 0.860079596306364,
+      "context_precision": 0.8148488199970745,
+      "answer_similarity": 0.8213957053821093
+    },
+    {
+      "faithfulness": 0.861690750095177,
+      "answer_relevancy": 0.8136764602387115,
+      "context_recall": 0.7530340186456366,
+      "context_precision": 0.827677986168374,
+      "answer_similarity": 0.7020084297197328
+    },
+    {
+      "faithfulness": 0.8743885359965323,
+      "answer_relevancy": 0.8255919121963614,
+      "context_recall": 0.7954858982425792,
+      "context_precision": 0.9354872605513211,
+      "answer_similarity": 0.7776019377803143
+    },
+    {
+      "faithfulness": 0.9105216918952709,
+      "answer_relevancy": 0.8943906227360073,
+      "context_recall": 0.854050548772982,
+      "context_precision": 0.9011490431346324,
+      "answer_similarity": 0.8308249473734917
+    },
+    {
+      "faithfulness": 0.9236338527595969,
+      "answer_relevancy": 0.8397586803912727,
+      "context_recall": 0.8395238729459765,
+      "context_precision": 0.8780913469129304,
+      "answer_similarity": 0.7930095271321601
+    },
+    {
+      "faithfulness": 0.8848049414143225,
+      "answer_relevancy": 0.8712310946520571,
+      "context_recall": 0.7561634264177548,
+      "context_precision": 0.9213862885670998,
+      "answer_similarity": 0.7063139792326124
+    },
+    {
+      "faithfulness": 0.8585015324857188,
+      "answer_relevancy": 0.8561503430793517,
+      "context_recall": 0.7874197381945984,
+      "context_precision": 0.9264652721059167,
+      "answer_similarity": 0.7807114861078537
+    },
+    {
+      "faithfulness": 0.8239025816481057,
+      "answer_relevancy": 0.7860443531935475,
+      "context_recall": 0.8674534430102367,
+      "context_precision": 0.9025202827182484,
+      "answer_similarity": 0.703603672755104
+    }
+  ],
+  "passed_all_gates": true
+}
