@@ -4,12 +4,23 @@ metadata:
   name: vyasa-ingress
   namespace: vyasa
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
 spec:
   ingressClassName: nginx
   rules:
   - host: vyasa.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: vyasa-gradio-service
+            port:
+              number: 7860
+  - host: api.vyasa.local
     http:
       paths:
       - path: /
