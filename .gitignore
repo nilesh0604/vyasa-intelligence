@@ -45,10 +45,22 @@ venv-*/
 
 # Project specific
 data/chroma/
+data/cache/
 data/bm25_index.pkl
 *.pkl
 *.jsonl
 reports/
+
+# Debug and scratch scripts (root-level only)
+/debug_*.py
+/trace_callbacks.py
+/working_api.py
+/direct_api.py
+/fixed_api*.py
+/flask_api.py
+/run_api_direct.py
+/simple_api.py
+/test_*.py
 
 # Logs
 *.log
